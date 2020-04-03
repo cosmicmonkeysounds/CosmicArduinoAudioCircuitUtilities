@@ -44,11 +44,11 @@ struct Button
 
 void Button::onOff(int msg)
 {
-  if ( msg == 1 )
+  if ( msg )
   {
     this->onOrOff = true;
   }
-  else
+  if ( msg == 0 )
   {
     this->onOrOff = false;
   }
@@ -63,73 +63,120 @@ int Button::scan()
     lastDebounceTime = millis();
   }
 
-  if ( (millis() - this->lastDebounceTime) > DEBOUNCE_DELAY ) // is it within debounce range?
+  if ( (millis() - this->lastDebounceTime) > DEBOUNCE_DELAY ) // is it outside debounce range?
   {
     
-    // button is up
-    if ( this->reading != this->state ) 
-    {
-      std::printf("Up");
+    if ( this->reading != this->state ) // button is up
+    { 
       this->state = this->reading;
 
-      // button is down
-      if ( this->state == HIGH ) 
-      {
-        std::printf("Down");
+      if ( this->state == HIGH ) // button is down
+      { 
         return 1;
       }
+      
     } 
   }
   return 0;
+}
+
+struct LED
+{
+  bool onOrOff = false;
+  int pin;
+
+  void flip(), onOff(int msg), updatePin();
+
+  LED ( int pinNum )
+  {
+    pin = pinNum;
+  }
+};
+
+void LED::flip()
+{
+  this->onOrOff = !this->onOrOff;
+  this->updatePin();
+}
+
+void LED::onOff(int msg)
+{
+  if ( msg )
+  {
+    this->onOrOff = true;
+  }
+  if ( msg == 0 )
+  {
+    this->onOrOff = false;
+  }
+  this->updatePin();
+}
+
+void LED::updatePin()
+{
+  digitalWrite( this->pin, this->onOrOff );
 }
 
 struct State
 {
   
   bool firstState = false, secondState = false;
-  unsigned int numButtons;
-  std::vector<Button> buttons;
+  unsigned int numButtons, numLEDs;
   int btnPins[2] = {BTN1, BTN2}, ledPins[2] = {LED1, LED2};
+  std::vector<Button> buttons;
+  std::vector<LED> leds;
 
   void updateLEDs(), scanButtons(), logic(int index, Button* btn);
   
   State()
   {
+    
     numButtons = sizeof(btnPins) / sizeof(int);
     for ( int i = 0; i < numButtons; ++i )
     {
       buttons.push_back(Button(btnPins[i]));
     }
+
+    numLEDs = sizeof(ledPins) / sizeof(int);
+    for ( int i = 0; i < numLEDs; ++i )
+    {
+      leds.push_back(LED(ledPins[i]));
+    }
+    
   }
   
 } state;
 
 void State::logic(int index, Button* btn)
 {
-    int pressed = btn->scan();
-    btn->lastState = btn->reading;
-    
-    if ( pressed == 1 )
-    {
-      std::printf(" button %d\n***\n\n", index) ;
- 
-    }
-    
+    btn->onOrOff = !btn->onOrOff;
+    this->leds[index].onOff(btn->onOrOff);
 }
 
 void State::updateLEDs()
 {
-  for ( int i = 0; i < this->numButtons; ++i )
+  for ( int i = 0; i < this->numLEDs; ++i )
     {
-      digitalWrite( ledPins[i], this->buttons.at(i).onOrOff );
+      this->leds.at(i).updatePin();
     }
 }
 
 void State::scanButtons()
 {
+  Button* btn;
   for ( int i = 0; i < this->numButtons; ++i )
     {
-      this->logic( i, &this->buttons.at(i) );
+      
+      btn = &this->buttons.at(i);
+      int pressed = btn->scan();
+      btn->lastState = btn->reading;
+      
+      if ( pressed == 1 )
+      {
+        std::printf(" button %d\n***\n\n", i);
+        this->logic(i, btn);
+      }
+      
     }
 }
 
