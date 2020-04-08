@@ -43,7 +43,7 @@ struct Button
   unsigned long lastDebounceTime = 0; // important for debounce timing
 
   int scan();
-  void onOff( int msg );
+  void onOff( bool msg );
 
   Button( int pinNum )
   {
@@ -52,16 +52,9 @@ struct Button
   
 };
 
-void Button::onOff( int msg )
+void Button::onOff( bool msg )
 {
-  if ( msg )
-  {
-    this->onOrOff = true;
-  }
-  if ( msg == 0 )
-  {
-    this->onOrOff = false;
-  }
+  this->onOrOff = msg;
 }
 
 int Button::scan()
@@ -100,6 +93,11 @@ struct Potentiometer
     val = analogRead( pin );
   }
 
+  int valToPWM()
+  {
+    return map( val, 0, 1023, 0, 255 );
+  }
+
   Potentiometer( int pinNum )
   {
     pin = pinNum;
@@ -130,14 +128,7 @@ void LED::flip()
 
 void LED::onOff( int msg )
 {
-  if ( msg )
-  {
-    this->onOrOff = true;
-  }
-  if ( msg == 0 )
-  {
-    this->onOrOff = false;
-  }
+  this->onOrOff = msg;
   this->updatePin();
 }
 
@@ -146,13 +137,22 @@ void LED::updatePin()
   digitalWrite( this->pin, this->onOrOff );
 }
 
+struct MOSFET
+{
+  int pwmVal, resistence;
+  
+};
+
 struct State
 {
   
-  bool firstState = false, 
-  secondState = false;
+  bool bypassState = false, 
+  chaosBypassState = false;
+
+  int chaosMode = 0;
   
-  unsigned int numButtons, numLEDs;
+  unsigned int numButtons, 
+  numLEDs;
   
   int btnPins[2] = { BTN1, BTN2 }, 
   ledPins[2] = { LED1, LED2 };
@@ -163,8 +163,8 @@ struct State
   Potentiometer pot{ POT1 };
 
   void updateLEDs(), 
-  scanButtons(), 
-  logic( int index, Button* btn );
+  scan(), 
+  buttonLogic( int index, Button* btn );
   
   State()
   {
@@ -185,10 +185,22 @@ struct State
   
 } state;
 
-void State::logic(int index, Button* btn)
+void State::buttonLogic( int index, Button* btn )
 {
     btn->onOrOff = !btn->onOrOff;
+    
     this->leds[index].onOff( btn->onOrOff );
+    
+    if( index == 0 )
+    {
+      this->bypassState = btn->onOrOff;
+    }
+
+    if( index == 1 )
+    {
+      this->chaosBypassState = btn->onOrOff;
+    }
+    
 }
 
 void State::updateLEDs()
@@ -199,27 +211,46 @@ void State::updateLEDs()
     }
 }
 
-void State::scanButtons()
-{
+void State::scan()
+{ 
   Button* btn;
   for( int i = 0; i < this->numButtons; ++i )
     {
       
-      btn = &this->buttons.at( i );
+      btn = &this->buttons.at(i);
       int pressed = btn->scan();
       btn->lastState = btn->reading;
       
-      if ( pressed == 1 )
+      if( pressed == 1 )
       {
-        std::printf(" button %d\n***\n\n", i);
-        this->logic(i, btn);
+        std::printf( " button %d\n***\n\n", i );
+        this->buttonLogic( i, btn );
       }
       
     }
+
+   if( this->bypassState )
+   {
+    // nuttin
+   }
+
+   this->pot.updateVal();
+
+   if( this->chaosBypassState )
+   {
+    if( this->chaosMode = 0 )
+    {
+      analogWrite( PWM1, this->pot.valToPWM() ); 
+    }
+   }
+   else
+   {
+    
+   }
+   
 }
 
 void loop() 
 {
-  state.pot.updateVal();
-  state.scanButtons();
+  state.scan();
 }
