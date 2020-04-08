@@ -22,15 +22,18 @@ struct Button
     }
 
     int scan()
+    // Returns 1 if button is down, 0 if it's up
     {
 
         this->reading = digitalRead( this->pin );
-        if( this->reading != this->lastState )
+        // maybe this is a bounce, maybe not
+        if( this->reading != this->lastState ) 
         {
-            lastDebounceTime = millis();
+            // either way, update that time the reading changed
+            lastDebounceTime = millis(); 
         }
 
-        // is it outside debounce range?
+        // is that new time outside debounce range?
         if( ( millis() - this->lastDebounceTime ) > 50 ) 
         {
             

@@ -1,16 +1,18 @@
 #include <ArduinoSTL.h>
 #include <vector>
 
+///// Custom library stuff /////
+///////////////////////////////
 #include "button_lib.h"
 #include "led_lib.h"
 #include "potentiometer_lib.h"
 
-// Setup and stuff for various constants used in the calculations of switch timing
-//////////////////////////////////////////////////////////////////////////////////
+// Setup and stuff for various constants used in the calculations of switch timing //
+/////////////////////////////////////////////////////////////////////////////////////
 #define DEBOUNCE_DELAY 50
 
-// Giving "numbers" to the physical pins 
-////////////////////////////////////////
+// Giving "numbers" to the physical pins //
+//////////////////////////////////////////
 #define LED1 11
 #define LED2 A0
 #define BTN1 A4
@@ -18,8 +20,8 @@
 #define POT1 A2
 #define PWM1 A4
 
-// This runs when the board boots and gets everything else ready
-////////////////////////////////////////////////////////////////
+// This runs when the board boots and gets everything else ready //
+//////////////////////////////////////////////////////////////////
 void setup() 
 {
   pinMode( LED1, OUTPUT );
@@ -31,7 +33,11 @@ void setup()
   Serial.begin( 9600 );
 }
 
+// Custom type that is the interface between you and the components //
+/////////////////////////////////////////////////////////////////////
 struct State
+// Implement however you wish; this is currently set up for development of 
+// my circuit the Calculator Fuzz (v3)
 {
   
   bool bypassState = false, 
