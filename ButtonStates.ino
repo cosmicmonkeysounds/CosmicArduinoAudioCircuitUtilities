@@ -1,6 +1,10 @@
 #include <ArduinoSTL.h>
 #include <vector>
 
+#include "button_lib.h"
+#include "led_lib.h"
+#include "potentiometer_lib.h"
+
 // Setup and stuff for various constants used in the calculations of switch timing
 //////////////////////////////////////////////////////////////////////////////////
 #define DEBOUNCE_DELAY 50
@@ -26,122 +30,6 @@ void setup()
   pinMode( POT1, INPUT );
   Serial.begin( 9600 );
 }
-
-// A custom type that holds the buttons state, and a suite of features to make it work
-//////////////////////////////////////////////////////////////////////////////////////
-struct Button
-{
-  
-  int pin; // physical pin number
-
-  // store the states of the button
-  bool reading = false, 
-  state = false, 
-  lastState = false, 
-  onOrOff = false; 
-  
-  unsigned long lastDebounceTime = 0; // important for debounce timing
-
-  int scan();
-  void onOff( bool msg );
-
-  Button( int pinNum )
-  {
-    pin = pinNum;
-  }
-  
-};
-
-void Button::onOff( bool msg )
-{
-  this->onOrOff = msg;
-}
-
-int Button::scan()
-{
-  
-  this->reading = digitalRead( this->pin );
-  if( this->reading != this->lastState )
-  {
-    lastDebounceTime = millis();
-  }
-
-  // is it outside debounce range?
-  if( ( millis() - this->lastDebounceTime ) > DEBOUNCE_DELAY ) 
-  {
-    
-    if( this->reading != this->state ) // button is up
-    { 
-      this->state = this->reading;
-
-      if( this->state == HIGH ) // button is down
-      { 
-        return 1;
-      }
-    } 
-    
-  }
-  return 0;
-}
-
-struct Potentiometer
-{
-  int val, pin;
-
-  void updateVal()
-  {
-    val = analogRead( pin );
-  }
-
-  int valToPWM()
-  {
-    return map( val, 0, 1023, 0, 255 );
-  }
-
-  Potentiometer( int pinNum )
-  {
-    pin = pinNum;
-    updateVal();
-  }
-};
-
-struct LED
-{
-  bool onOrOff = false;
-  int pin;
-
-  void flip(), 
-  onOff( int msg ), 
-  updatePin();
-
-  LED( int pinNum )
-  {
-    pin = pinNum;
-  }
-};
-
-void LED::flip()
-{
-  this->onOrOff = !this->onOrOff;
-  this->updatePin();
-}
-
-void LED::onOff( int msg )
-{
-  this->onOrOff = msg;
-  this->updatePin();
-}
-
-void LED::updatePin()
-{
-  digitalWrite( this->pin, this->onOrOff );
-}
-
-struct MOSFET
-{
-  int pwmVal, resistence;
-  
-};
 
 struct State
 {
@@ -183,7 +71,7 @@ struct State
     
   }
   
-} state;
+};
 
 void State::buttonLogic( int index, Button* btn )
 {
@@ -241,6 +129,7 @@ void State::scan()
     if( this->chaosMode = 0 )
     {
       analogWrite( PWM1, this->pot.valToPWM() ); 
+      // std::printf( "Exporting %d on pin %d", this->pot.val, this->pot.pin );
     }
    }
    else
@@ -249,6 +138,8 @@ void State::scan()
    }
    
 }
+
+State state;
 
 void loop() 
 {
