@@ -20,14 +20,9 @@ struct LED
         this->updatePin();
     }
     
-    void LED::updatePin()
+    void updatePin()
     {
         digitalWrite( this->pin, this->onOrOff );
     }
     
 };
-
-
-
-
-
