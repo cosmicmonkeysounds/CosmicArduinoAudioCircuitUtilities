@@ -8,35 +8,36 @@ Only need the Arduino IDE!
 
 ## Structure
 
-### AudioCircuitUtilities.ino (main)
+### CosmicArduinoAudioCircuitUtilities.ino (main)
 
-Holds the global variables, set up logic, main loop, and a custom type called "State".
-State is the type that you expand upon to handle all the functionality of whatever interface you want to build.
+Holds basic Arduino setup and loop stuff, and initializes and instance of State.
 
-### button_lib.h
+### State.h
 
-A simple "button" type that reads (and debounces) a pushbutton from a digital pin.
-The "onOrOff" member variable can be switched on or off, and used by State in main to do whatever you'd like.
+A singleton that holds all references to all hardware components and functions to use those components.
 
-### led_lib.h
+### DigitalDevice.h
 
-A stupid simple way of keeping track of LED status's.
+Basic implementation for a read/write digital device that is a base class to all other digital components.
 
-### potentiometer_lib.h
+### LED.h
 
-Another simple library that reads a 10-bit value from an analog pin and stores it, with a function to map that 10-bit number to an 8-bit number for PWM use.
+A stupid simple DigitalDevice derived class for digital LED outputs.
+
+### PushButton.h
+
+A stupid simple on/off DigitalDevice derived class with debounce.
+
+### LinkedList.h
+
+A little helper struct so I don't need to include the C++ standard library just to use the Vector class. 
+A doubly linked list works just fine for now (: 
 
 ## Authors
 
-* **John Janigan-Mills** - *Initial work, project head* - [Cosmic Monkey Sounds](http://cosmicmonkeysounds.com)
+* **John Janigan-Mills** - *Chief-Maniac-in-charge* - [Cosmic Monkey Sounds](http://cosmicmonkeysounds.com)
 
 ## License
 
 This project is licensed under the GPLv3 - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
 
