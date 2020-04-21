@@ -4,7 +4,7 @@ A (hopefully) comprehensive, lightweight Arduino library and interface for devel
 
 ## Prerequisites
 
-You'll need a copy of the Arduino IDE and have the ArduinoSTL library installed after you clone this repo.
+Only need the Arduino IDE!
 
 ## Structure
 
@@ -28,7 +28,7 @@ Another simple library that reads a 10-bit value from an analog pin and stores i
 
 ## Authors
 
-* **John Janigan-Mills** - *Initial work, project head* - [Cosmic Monkey Sounds](https://cosmicmonkeysounds.com)
+* **John Janigan-Mills** - *Initial work, project head* - [Cosmic Monkey Sounds](http://cosmicmonkeysounds.com)
 
 ## License
 
