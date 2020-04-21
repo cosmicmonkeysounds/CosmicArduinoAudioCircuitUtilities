@@ -1,9 +1,11 @@
 #include "State.h"
 
+
 int ledPins[2]    = {A0, 11};
 int buttonPins[2] = {A4, A5};
 
 State& state = State::getInstance();
+
 
 void setup() 
 {
@@ -15,7 +17,6 @@ void setup()
 
   Serial.begin(9600);
 }
-
 
 
 void loop() 

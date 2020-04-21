@@ -30,8 +30,8 @@ private:
     State() {}
     ~State() { deleteInstance(); }
 
-    void makeLED        ( int pins[] );
-    void makePushButton ( int pins[] );
-    void makeSwitch     ( int pins[] );
+    // void makeLED        ( int pins[] );
+    // void makePushButton ( int pins[] );
+    // void makeSwitch     ( int pins[] );
 
 };

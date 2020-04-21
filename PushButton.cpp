@@ -1,4 +1,5 @@
 #include "PushButton.h"
+#include "Arduino.h"
 
 PushButton::PushButton( int p ) : DigitalDevice( p ) {}
 

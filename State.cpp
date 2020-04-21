@@ -12,22 +12,22 @@ void State::deleteInstance()
     instance = nullptr;
 }
 
-void setupSequence( int leds[], int buttons[] )
+void State::setupSequence( int leds[], int buttons[] )
 {
-    for ( int p = 0; p < ( sizeof(leds) / sizeof(leds[0]) ); ++p )
+    for( int p = 0; p < ( sizeof(leds) / sizeof(leds[0]) ); ++p )
     {
         LED* l = new LED( leds[p] );
         LEDs.add(l);
     }
 
-    for ( int p = 0; p < ( sizeof(buttons) / sizeof(buttons[0]) ); ++p )
+    for( int p = 0; p < ( sizeof(buttons) / sizeof(buttons[0]) ); ++p )
     {
         PushButton* pb = new PushButton( buttons[p] );
         PushButtons.add(pb);
     }
 }
 
-void scanUI()
+void State::scanUI()
 {
     PushButton* pb = nullptr;
     for( int i = 0; i < PushButtons.length; ++i )
