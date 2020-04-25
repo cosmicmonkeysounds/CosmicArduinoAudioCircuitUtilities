@@ -7,4 +7,5 @@ class LED : public DigitalDevice
 public:
     LED( int p ); 
     
+    
 };

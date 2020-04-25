@@ -4,7 +4,6 @@
 
 class PushButton : public DigitalDevice
 {
-  
 public:
 
     PushButton( int p );
@@ -13,5 +12,6 @@ public:
     unsigned long lastDebounceTime = 0;
 
     void scan();
+
     
 };

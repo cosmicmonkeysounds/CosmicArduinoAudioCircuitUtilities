@@ -1,39 +1,20 @@
 #include "State.h"
+#include "LED.h"
+#include "PushButton.h"
 
-State& State::getInstance()
+
+State* State::getInstance( int* l, int* pb )
 {
-    if( instance == nullptr ) instance = new State();
-    return *instance;
+    if( !instance ) instance = new State( l, pb );
+    return instance;
 }
 
-void State::deleteInstance()
-{
-    delete instance;
-    instance = nullptr;
-}
-
-void State::setupSequence( int leds[], int buttons[] )
-{
-    for( int p = 0; p < ( sizeof(leds) / sizeof(leds[0]) ); ++p )
-    {
-        LED* l = new LED( leds[p] );
-        LEDs.add(l);
-    }
-
-    for( int p = 0; p < ( sizeof(buttons) / sizeof(buttons[0]) ); ++p )
-    {
-        PushButton* pb = new PushButton( buttons[p] );
-        PushButtons.add(pb);
-    }
-}
 
 void State::scanUI()
 {
-    PushButton* pb = nullptr;
-    for( int i = 0; i < PushButtons.length; ++i )
+    for( int i = 0; i < 2; ++i )
     {
-        pb = PushButtons[i];
-        pb->scan();
-        LEDs[i]->writePin( pb->state );
+        PushButtons[i]->scan();
+        LEDs[i]->writePin( PushButtons[i]->state );
     }
 }
