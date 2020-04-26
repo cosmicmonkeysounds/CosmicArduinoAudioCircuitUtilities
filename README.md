@@ -28,11 +28,6 @@ A stupid simple DigitalDevice derived class for digital LED outputs.
 
 A stupid simple on/off DigitalDevice derived class with debounce.
 
-### LinkedList.h
-
-A little helper struct so I don't need to include the C++ standard library just to use the Vector class. 
-A doubly linked list works just fine for now (: 
-
 ## Authors
 
 * **John Janigan-Mills** - *Chief-Maniac-in-charge* - [Cosmic Monkey Sounds](http://cosmicmonkeysounds.com)
