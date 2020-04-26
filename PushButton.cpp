@@ -8,12 +8,12 @@ void PushButton::scan()
     readPin();
     if( pinReading != lastState ) lastDebounceTime = millis();
 
-    if( (millis() - lastDebounceTime) > 50 )
+    if( millis() - lastDebounceTime > 50 )
     {
         if( pinReading != state )
         {
             state = pinReading;
-            if( state ) onOrOff = !onOrOff;
+            if( state ) changeState();
         }
     }
 
