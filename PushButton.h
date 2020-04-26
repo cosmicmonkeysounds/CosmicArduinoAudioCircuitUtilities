@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DigitalDevice.h"
+#include "Arduino.h"
 
 class PushButton : public DigitalDevice
 {

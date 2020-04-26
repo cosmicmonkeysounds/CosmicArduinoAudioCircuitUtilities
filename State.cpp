@@ -15,6 +15,6 @@ void State::scanUI()
     for( int i = 0; i < 2; ++i )
     {
         PushButtons[i]->scan();
-        LEDs[i]->writePin( PushButtons[i]->state );
+        LEDs[i]->writePin( PushButtons[i]->onOrOff );
     }
 }

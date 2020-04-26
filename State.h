@@ -28,16 +28,14 @@ private:
     
     State( int lPins[], int bPins[] ) 
     {
-        for( int p = 0; p < ( sizeof(lPins) / sizeof(lPins[0]) ); ++p )
+        for( int p = 0; p <= ( sizeof(lPins) / sizeof(lPins[0]) ); ++p )
         {
-        LED* l = new LED( lPins[p] );
-        LEDs[p] = l;
+            LEDs[p] = new LED( lPins[p] );
         }
 
-        for( int p = 0; p < ( sizeof(bPins) / sizeof(bPins[0]) ); ++p )
+        for( int p = 0; p <= ( sizeof(bPins) / sizeof(bPins[0]) ); ++p )
         {
-        PushButton* l = new PushButton( bPins[p] );
-        PushButtons[p] = l;
+            PushButtons[p] = new PushButton( bPins[p] );
         }
     }
     

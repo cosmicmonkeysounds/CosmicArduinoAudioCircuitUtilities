@@ -13,7 +13,7 @@ void PushButton::scan()
         if( pinReading != state )
         {
             state = pinReading;
-            if( state ) changeState();
+            if( state ) onOrOff = !onOrOff;
         }
     }
 

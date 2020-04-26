@@ -1,10 +1,7 @@
 #include "State.h"
 
-
 int ledPins[2]    = {A0, 11};
 int buttonPins[2] = {A4, A5};
-
-class State;
 
 State* State::instance = nullptr;
 State* state = State::getInstance( ledPins, buttonPins );
@@ -16,8 +13,4 @@ void setup()
   Serial.begin(9600);
 }
 
-
-void loop() 
-{
-  state->scanUI();
-}
+void loop() { state->scanUI(); }
