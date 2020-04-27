@@ -6,9 +6,7 @@ A (hopefully) comprehensive, lightweight Arduino library and interface for devel
 
 Only need the Arduino IDE!
 
-## Structure
-
-### CosmicArduinoAudioCircuitUtilities.ino (main)
+## CosmicArduinoAudioCircuitUtilities.ino (main)
 
 Holds basic Arduino setup and loop stuff, and initializes and instance of State.
 
@@ -27,6 +25,30 @@ A stupid simple DigitalDevice derived class for digital LED outputs.
 ### PushButton.h
 
 A stupid simple on/off DigitalDevice derived class with debounce.
+
+### AnalogDevice.h
+
+Basic implementation of a read/write analog device.
+
+### Potentiometer.h
+
+A simple potentiometer implementation with that stores an average value to avoid jittering, and a few conversion functions for different bit depths.
+
+### PWM.h
+
+Basic PWM pin.
+
+### OptoFET.h
+
+Basic Opto in.
+
+## OptoVoltMeter.ino
+
+A simple volt meter implementation that determines the value of the opto-coupler at every DAC value and prints it the Serial buss.
+
+### SerialToCSV.py
+
+A little helper script that takes those Serial buss messages and parses them to a CSV file.
 
 ## Authors
 
