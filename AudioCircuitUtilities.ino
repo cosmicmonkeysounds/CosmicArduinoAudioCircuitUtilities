@@ -2,7 +2,6 @@
 
 #include "State.h"
 
-
 int ledPins[2]    = { 12, 11 };
 int buttonPins[2] = { 10, 9 };
 int potPins[1]    = { A2 };

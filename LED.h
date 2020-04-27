@@ -3,9 +3,7 @@
 
 class LED : public DigitalDevice
 {
-  
 public:
-    LED( int p ); 
-    
+    LED( int p ) : DigitalDevice( p, false ) {} 
     
 };

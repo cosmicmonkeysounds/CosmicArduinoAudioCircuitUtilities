@@ -22,11 +22,8 @@ void State::scanUI()
 
     for( Potentiometer* p : Pots )
     {
-      p->updateValue();
-//      analogWrite( A0, 1200 );
+        p->updateValue();
+        // Serial.println( p->get12BitValue() );
+        // analogWrite( A0, p->get12BitValue() );
     }
-//    Pots[0]->updateValue();
-//    analogWrite( A0, v );
-//    analogWrite( A1, Pots[0]->get12BitValue() );
-//    Serial.println( v );
 }

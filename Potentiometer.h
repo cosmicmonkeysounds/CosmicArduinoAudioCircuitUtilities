@@ -10,9 +10,10 @@ public:
 
     static const int numReadings = 10;
     int readings[numReadings]    = { analogRead(pin) };
+    unsigned long lastTimeRead   = millis();
     int readIndex                = 0, 
         averageVal               = readings[0];
-    unsigned long lastTimeRead   = millis();
+
 
     void updateValue()
     {   
