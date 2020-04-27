@@ -14,21 +14,27 @@ with open( "H11F3.csv", 'r' ) as csvfile:
         y.append( cleanRow )
 
 plt.figure(1)
+
 for r in y:
     plt.plot(x,r, label=r[0])
+
 plt.xlabel('DAC Value')
 plt.ylabel('Resistance from OptoCoupler (ohms)')
 plt.title('H11F3 FET\nResistance vs. 12-Bit DAC Value vs. R1')
-plt.axis( [1500, 1900, -230000, 4000000] )
+plt.axis( [1500, 1900, -1000, 4000000] )
 plt.legend()
 
 plt.figure(2)
-lin1 = np.array( y[0] )
-lin2 = np.array( y[1] )
-b, m = polyfit(lin1, lin2, 1)
-plt.plot(lin1, lin2, '.')
-plt.plot(lin1, b+m*lin1, '-')
 
+avg = [0] * len(y[0])
+for i in range( len(y[0]) ):
+    for j in range( len(y) ):
+        avg[i] = y[j][i]
+avg = [ e // len(y) for e in avg ]
+
+plt.plot(x, avg)
+plt.xlabel('DAC Value')
+plt.ylabel('Resistance from OptoCoupler (ohms)')
+plt.title('H11F3 FET\nAverage Resistance vs. 12-Bit DAC Value')
+plt.axis( [1500, 1800, -1000, 1000000] )
 plt.show()
-
-input()
