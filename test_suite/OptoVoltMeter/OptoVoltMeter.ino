@@ -1,3 +1,17 @@
+/**
+ *  A dumb lil' sketch that sends a DAC signal to an OptoFET and then reads 
+ *  an input from a voltage divider with the OptoFET as R2 and prints it Serial
+ *  to be picked up a processed by SerialToCSV.py 
+ * 
+ *  When you run the sketch, it will wait for you to press a button to get started. Run SerialToCSV.py before starting the loop.
+ *  After every DAC value and voltage has been read, it'll pause so you can replace R1. This is done to decrease reading error. 
+ *  As R1 gets much smaller or bigger compared than R2 (the OptoFET), the resistance read error will increase.
+ *
+ *  After your done after R1 value, simply hit reset on the MCU to terminate the Serial printing, 
+ *  which will in turn stop the Python script. You now have a .csv file to run statistics with. 
+ *  Run CSVToGraph.py to view your results with MatPlotLib. 
+*/
+
 int dacPin = A0,
     outPin = 7,
     inPin  = A5;
