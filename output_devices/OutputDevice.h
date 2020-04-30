@@ -12,6 +12,7 @@
 class OutputDevice{
 public:
     OutputDevice(int p, int bit) : pin(p), bitDepth(bit) {}
+    virtual ~OutputDevice() {}
     int pin, bitDepth;
 
     virtual void writePin(int) = 0;

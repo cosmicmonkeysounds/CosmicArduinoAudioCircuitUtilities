@@ -4,9 +4,7 @@
 
 class PWM : public OutputDevice{
 public:
-    PWM(int p) : OutputDevice(p, 8) {}
-
-    void writePin(int v){
-        analogWrite(pin, v);
-    }
+    PWM(int);
+    ~PWM() override;
+    void writePin(int v) override;
 };

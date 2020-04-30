@@ -5,17 +5,9 @@
 
 class LED : public OutputDevice, public OnOffDevice{
 public:
-    LED(int p) : OutputDevice(p, 0) {} 
-
-    void writePin(int v){
-        digitalWrite(pin, v);
-    }
-
+    LED(int);
+    ~LED() override;
     int stupidCounter = 0;
-
-    void crazyWrite(){
-        analogWrite(pin, stupidCounter);
-        stupidCounter = (stupidCounter + 1) % 256;
-    }
-
+    void crazyWrite();
+    void writePin(int v);
 };

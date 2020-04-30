@@ -11,15 +11,18 @@
 
 #include "Arduino.h"
 
-#include "input_devices/PushButton.h"
-#include "input_devices/Potentiometer.h"
+#include "input_devices/PushButton.cpp"
+#include "input_devices/Potentiometer.cpp"
 
-#include "output_devices/DacOut.h"
-#include "output_devices/LED.h"
+#include "output_devices/DacOut.cpp"
 
-#include "external_parts/OptoFET.h"
+#include "output_devices/LED.cpp"
+
+#include "external_parts/OptoFET.cpp"
 
 #include "ModMatrix.h"
+
+#define NAME_OF( component ) #component // "stringizing" operation; let's you get the actual variable name!
 
 class State{
 public:
@@ -30,7 +33,10 @@ public:
     }
     
     void mainLoop(){
-        for ( auto* i : inputDevices ){ i->update(); }
+        for ( auto* i : inputDevices ){ 
+            i->update(); 
+            //Serial.println( i->currentValue );
+        }
 
         if( crazyToggle->onOrOff ) led1->crazyWrite();
         else led1->writePin(crazyToggle->onOrOff);

@@ -8,7 +8,6 @@
  * 
 */
 
-#include "Arduino.h"
 #include "../ModMatrix.h"
 #include "../output_devices/OutputDevice.h"
 
@@ -16,6 +15,9 @@ class ExternalPart{
 public:
     ExternalPart( ModMatrix* mod, OutputDevice* device ) 
                 : modMatrix(mod), outputDevice(device) {}
+
+    virtual ~ExternalPart() {}
+
     int outValue = 0;
     ModMatrix* modMatrix;
     OutputDevice* outputDevice;

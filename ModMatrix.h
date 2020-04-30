@@ -1,5 +1,5 @@
 #pragma once
-#include "Arduino.h"
+#include "input_devices/InputDevice.h"
 
 /**
  *  A class that has an array of input devices to be read from and combined 

@@ -9,6 +9,7 @@
 class InputDevice{
 public:
     InputDevice(int p) : pin(p) {}
+    virtual ~InputDevice() {}
     int pin, currentValue = 0;
     virtual void update() = 0;
 };
