@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "PushButton.h"
 
-PushButton::PushButton(int p) : InputDevice( p ) {}
+PushButton::PushButton(int p) : InputDevice(p) {}
 PushButton::~PushButton() {}
 
 void PushButton::update(){
@@ -9,7 +9,7 @@ void PushButton::update(){
     if( millis() - lastDebounceTime > 50 ){
         if( pinReading != state ){
             state = pinReading;
-            if( state ) changeState();
+            if( state ) { changeState(); Serial.println("DICKS!!"); }
         }
     }
     lastState = pinReading;

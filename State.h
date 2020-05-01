@@ -35,11 +35,11 @@ public:
     void mainLoop(){
         for ( auto* i : inputDevices ){ 
             i->update(); 
-            //Serial.println( i->currentValue );
+            //Serial.print( NAME_OF(i) ); Serial.println( i->currentValue );
         }
 
-        if( crazyToggle->onOrOff ) led1->crazyWrite();
-        else led1->writePin(crazyToggle->onOrOff);
+        if( crazyToggle.onOrOff ) led1.crazyWrite();
+        else led1.writePin(crazyToggle.onOrOff);
 
         for ( auto* o : externalParts ){ o->processInputs(); }
     }
@@ -50,25 +50,27 @@ private:
     ~State() { delete instance; }
 
     State(){
-        lpKnob      = new Potentiometer(A2);
-        hpKnob      = new Potentiometer(A3);
-        crazyToggle = new PushButton(10);
-        
-        led1 = new LED(11);
-
-        lpFreq = new OptoFET( new ModMatrix(), new DacOut(A0, 12) );
-        lpFreq->modMatrix->inputs[0] = lpKnob;
-
-        hpFreq = new OptoFET( new ModMatrix(), new DacOut(A1, 12) );
-        hpFreq->modMatrix->inputs[0] = hpKnob;
+        lpFreq.modMatrix->inputs[0] = &lpKnob;
+        hpFreq.modMatrix->inputs[0] = &hpKnob;
     }
 
-    Potentiometer *lpKnob, *hpKnob;
-    PushButton *crazyToggle;
-    InputDevice *inputDevices[3] = { lpKnob, hpKnob, crazyToggle };
+    Potentiometer lpKnob{A2};
+    Potentiometer hpKnob{A3};
 
-    LED *led1;
+    PushButton crazyToggle{10};
 
-    OptoFET *lpFreq, *hpFreq;
-    ExternalPart *externalParts[2] = { lpFreq, hpFreq };
+    InputDevice *inputDevices[3] = { &lpKnob, &hpKnob, &crazyToggle };
+
+    LED led1{11};
+
+    ModMatrix lpFreqMod{};
+    ModMatrix hpFreqMod{};
+
+    DacOut lpDAC{A0, 12};
+    DacOut hpDAC{A1, 12};
+
+    OptoFET lpFreq{ &lpFreqMod, &lpDAC };
+    OptoFET hpFreq{ &hpFreqMod, &hpDAC };
+
+    ExternalPart *externalParts[2] = { &lpFreq, &hpFreq };
 };

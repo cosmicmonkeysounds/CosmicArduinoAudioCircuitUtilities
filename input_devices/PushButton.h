@@ -1,14 +1,21 @@
 #pragma once
 #include "InputDevice.h"
-#include "../OnOffDevice.h"
 
-class PushButton : public InputDevice, public OnOffDevice{
+class PushButton : public InputDevice{
 public:
     PushButton(int);
     ~PushButton() override;
 
-    bool state = false, lastState = false, pinReading = false;
+    bool state = false, lastState = false, pinReading = false, onOrOff = false;
     unsigned long lastDebounceTime = 0;
+
+    void changeState( bool io ){
+        onOrOff = io;
+    }
+
+    void changeState(){
+        changeState( !onOrOff );
+    }
 
     void update() override;
 };

@@ -6,8 +6,8 @@
 
 #include "State.h"
 
-int inPins[]  = {9,  10};
-int outPins[] = {11, 12};
+int inPins[2]  = {9,  10};
+int outPins[2] = {11, 12};
 
 State* State::instance = nullptr;     // Not sure why I have to use this line??? 
                                       // Even if I declare instance = nullptr in-class, it doesn't work. 
