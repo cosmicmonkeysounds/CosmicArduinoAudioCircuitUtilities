@@ -1,4 +1,9 @@
 #pragma once
+
+/**
+ *  A simple 10-bit PWM output device.
+*/
+
 #include "Arduino.h"
 #include "OutputDevice.h"
 

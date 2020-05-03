@@ -1,4 +1,9 @@
 #pragma once
+
+/**
+ *  A stupid simple on/off pushbutton with debounce
+*/
+
 #include "InputDevice.h"
 
 class PushButton : public InputDevice{

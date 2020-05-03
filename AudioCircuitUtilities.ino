@@ -1,13 +1,22 @@
 /**
  *  The root of it all! Pretty barren. 
- *  Didn't want this file to send any info to any of the modules, hence the seperate pin declarations.
- *  Don't want to D.R.Y. because then State would need an even longer constructor and I'm not about it.
 */
+
+// all these #defines spill over to State, which is handy.
+
+#define btn1pin  9
+#define btn2pin  10
+#define led1pin  11
+#define led2pin  12
+#define pot1pin  A2
+#define pot2pin  A3
+#define opto1pin A0
+#define opto2pin A1
 
 #include "State.h"
 
-int inPins[2]  = {9,  10};
-int outPins[2] = {11, 12};
+int inPins[2]  = {btn1pin, btn2pin};
+int outPins[2] = {led1pin, led2pin};
 
 State* State::instance = nullptr;     // Not sure why I have to use this line??? 
                                       // Even if I declare instance = nullptr in-class, it doesn't work. 
@@ -21,4 +30,4 @@ void setup(){
   Serial.begin(9600);
 }
 
-void loop() { state->mainLoop(); }
+void loop(){ state->mainLoop(); }

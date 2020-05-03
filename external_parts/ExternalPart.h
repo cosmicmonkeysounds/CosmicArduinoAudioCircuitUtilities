@@ -13,14 +13,14 @@
 
 class ExternalPart{
 public:
-    ExternalPart( ModMatrix* mod, OutputDevice* device ) 
+    ExternalPart( ModMatrix& mod, OutputDevice& device ) 
                 : modMatrix(mod), outputDevice(device) {}
 
     virtual ~ExternalPart() {}
 
     int outValue = 0;
-    ModMatrix* modMatrix;
-    OutputDevice* outputDevice;
+    ModMatrix& modMatrix;
+    OutputDevice& outputDevice;
     
     /**
      *  Returns some mapped integer value that might correspond with the range of output desired,
@@ -35,8 +35,8 @@ public:
     // Is this too crude? Press F to pay respects.
     void processInputs(){
         outValue = map( transferFunction(), 
-                        0, modMatrix->bitDepth,
-                        0, outputDevice->bitDepth );
-        outputDevice->writePin(outValue);
+                        0, modMatrix.bitDepth,
+                        0, outputDevice.bitDepth );
+        outputDevice.writePin(outValue);
     }
 };

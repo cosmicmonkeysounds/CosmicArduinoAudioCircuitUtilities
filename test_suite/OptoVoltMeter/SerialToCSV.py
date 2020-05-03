@@ -1,3 +1,5 @@
+# Upload the Arduino program and have that running before running this script.
+
 import serial
 import csv
 

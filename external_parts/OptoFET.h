@@ -4,7 +4,7 @@
 
 class OptoFET : public ExternalPart{
 public:
-    OptoFET( ModMatrix*, OutputDevice*);
+    OptoFET( ModMatrix&, OutputDevice& );
     ~OptoFET() override;
     int transferFunction() override;
 };

@@ -22,8 +22,6 @@
 
 #include "ModMatrix.h"
 
-#define NAME_OF( component ) #component // "stringizing" operation; let's you get the actual variable name!
-
 class State{
 public:
 
@@ -33,15 +31,16 @@ public:
     }
     
     void mainLoop(){
-        for ( auto* i : inputDevices ){ 
+        for( auto* i : inputDevices ){ 
             i->update(); 
-            //Serial.print( NAME_OF(i) ); Serial.println( i->currentValue );
         }
 
         if( crazyToggle.onOrOff ) led1.crazyWrite();
-        else led1.writePin(crazyToggle.onOrOff);
+        if( !crazyToggle.onOrOff ) led1.writePin(0);
 
-        for ( auto* o : externalParts ){ o->processInputs(); }
+        for( auto* o : externalParts ){ 
+            o->processInputs(); 
+            }
     }
 
 private:
@@ -49,28 +48,29 @@ private:
     static State* instance;
     ~State() { delete instance; }
 
-    State(){
-        lpFreq.modMatrix->inputs[0] = &lpKnob;
-        hpFreq.modMatrix->inputs[0] = &hpKnob;
+    State()
+    {
+        lpFreq.modMatrix.inputs[0] = &lpPot;
+        hpFreq.modMatrix.inputs[0] = &hpPot;
     }
 
-    Potentiometer lpKnob{A2};
-    Potentiometer hpKnob{A3};
+    Potentiometer lpPot{pot1pin};
+    Potentiometer hpPot{pot2pin};
 
-    PushButton crazyToggle{10};
+    PushButton crazyToggle{btn1pin};
 
-    InputDevice *inputDevices[3] = { &lpKnob, &hpKnob, &crazyToggle };
+    InputDevice *inputDevices[3] = { &lpPot, &hpPot, &crazyToggle };
 
-    LED led1{11};
+    LED led1{led1pin};
 
     ModMatrix lpFreqMod{};
     ModMatrix hpFreqMod{};
 
-    DacOut lpDAC{A0, 12};
-    DacOut hpDAC{A1, 12};
+    DacOut lpDAC{opto1pin, 12};
+    DacOut hpDAC{opto1pin, 12};
 
-    OptoFET lpFreq{ &lpFreqMod, &lpDAC };
-    OptoFET hpFreq{ &hpFreqMod, &hpDAC };
+    OptoFET lpFreq{ lpFreqMod, lpDAC };
+    OptoFET hpFreq{ hpFreqMod, hpDAC };
 
     ExternalPart *externalParts[2] = { &lpFreq, &hpFreq };
 };
