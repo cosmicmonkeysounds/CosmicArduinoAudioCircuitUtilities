@@ -7,7 +7,8 @@
 #include "Arduino.h"
 #include "OutputDevice.h"
 
-class PWM : public OutputDevice{
+class PWM : public OutputDevice
+{
 public:
     PWM(int);
     ~PWM() override;

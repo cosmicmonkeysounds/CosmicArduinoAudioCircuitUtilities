@@ -6,7 +6,8 @@
 
 #include "OutputDevice.h"
 
-class DacOut : public OutputDevice{
+class DacOut : public OutputDevice
+{
 public:
     DacOut(int, int);
     ~DacOut() override;

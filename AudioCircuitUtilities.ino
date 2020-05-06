@@ -13,21 +13,21 @@
 #define opto1pin A0
 #define opto2pin A1
 
+#include <vector>
+
 #include "State.h"
 
 int inPins[2]  = {btn1pin, btn2pin};
 int outPins[2] = {led1pin, led2pin};
 
-State* State::instance = nullptr;     // Not sure why I have to use this line??? 
-                                      // Even if I declare instance = nullptr in-class, it doesn't work. 
-                                      // Needs to be done in this file it seems. Hmm...
+State& state = State::getInstance();
 
-State* state = State::getInstance();  // I should just be able to declare this.
-
-void setup(){
+void setup()
+{
   for( int p : inPins )  { pinMode( p, INPUT );  }
   for( int p : outPins ) { pinMode( p, OUTPUT ); }
+//  attachInterrupt( digitalPinToInterrupt(1), [](){ state.handler.objects[0].callback(); }, CHANGE );
   Serial.begin(9600);
 }
 
-void loop(){ state->mainLoop(); }
+void loop(){ state.mainLoop(); }

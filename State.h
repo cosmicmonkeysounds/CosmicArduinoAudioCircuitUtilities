@@ -9,6 +9,8 @@
  * 
 */
 
+#include <functional>
+
 #include "Arduino.h"
 
 #include "input_devices/PushButton.cpp"
@@ -20,34 +22,45 @@
 
 #include "external_parts/OptoFET.cpp"
 
+#include "isr/IsrHandler.cpp"
+#include "isr/RotaryPin.h"
+
 #include "ModMatrix.h"
 
-class State{
+class State
+{
 public:
 
-    static State* getInstance(){
-        if( !instance ) instance = new State();
+    IsrHandler& handler = IsrHandler::getInstance();
+    RotaryPin rotA{1, handler};
+
+    static State& getInstance(){
+        static State instance;
         return instance;
     }
     
-    void mainLoop(){
-        for( auto* i : inputDevices ){ 
+
+    void mainLoop()
+    {
+        for( auto* i : inputDevices )
+        { 
             i->update(); 
         }
-
+    
         if( crazyToggle.onOrOff ) led1.crazyWrite();
         if( !crazyToggle.onOrOff ) led1.writePin(0);
-
-        for( auto* o : externalParts ){ 
+    
+        for( auto* o : externalParts )
+        { 
             o->processInputs(); 
-            }
+        }
     }
 
 private:
 
-    static State* instance;
-    ~State() { delete instance; }
-
+    State( State const& copy );
+    State& operator= ( State const& copy );
+    
     State()
     {
         lpFreq.modMatrix.inputs[0] = &lpPot;
@@ -73,4 +86,5 @@ private:
     OptoFET hpFreq{ hpFreqMod, hpDAC };
 
     ExternalPart *externalParts[2] = { &lpFreq, &hpFreq };
+
 };

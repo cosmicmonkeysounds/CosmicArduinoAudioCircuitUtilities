@@ -59,7 +59,7 @@ A 1-bit, on or off LED output device.
 
 ## test_suite/OptoVoltMeter.ino
 
-A simple volt meter implementation that determines the value of the opto-coupler at every DAC value and prints it the Serial buss.
+A simple volt meter implementation that determines the value of the opto-coupler at every DAC value and prints it the Serial buss. Has helper Python scripts to read from Serial to .csv, and then to plot that .csv in matplotlib. 
 
 ## Authors
 

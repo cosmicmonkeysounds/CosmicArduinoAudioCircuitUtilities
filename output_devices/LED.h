@@ -6,7 +6,8 @@
 
 #include "OutputDevice.h"
 
-class LED : public OutputDevice{
+class LED : public OutputDevice
+{
 public:
     LED(int);
     ~LED() override;

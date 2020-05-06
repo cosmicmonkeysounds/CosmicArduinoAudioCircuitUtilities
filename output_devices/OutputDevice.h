@@ -9,7 +9,8 @@
  *  this may be a good call.
 */
 
-class OutputDevice{
+class OutputDevice
+{
 public:
     OutputDevice(int p, int bit) : pin(p), bitDepth(bit) {}
     virtual ~OutputDevice() {}

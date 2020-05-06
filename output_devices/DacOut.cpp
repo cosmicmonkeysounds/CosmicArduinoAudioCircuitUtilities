@@ -4,6 +4,7 @@
 DacOut::DacOut(int p, int bit) : OutputDevice(p, bit) {}
 DacOut::~DacOut() {}
 
-void DacOut::writePin(int val){
+void DacOut::writePin(int val)
+{
     analogWrite(pin, val);
 }
