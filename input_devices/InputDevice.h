@@ -6,10 +6,10 @@
  *  as an input in the ExternalParts' ModMatrix member variable.
 */
 
-class InputDevice{
+class InputDevice
+{
 public:
-    InputDevice(int p) : pin(p) {}
-    virtual ~InputDevice() {}
-    int pin, currentValue = 0;
-    virtual void update() = 0;
+    InputDevice(int p);
+    virtual ~InputDevice() = 0;
+    int pin;
 };

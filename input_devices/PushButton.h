@@ -4,23 +4,13 @@
  *  A stupid simple on/off pushbutton with debounce
 */
 
-#include "InputDevice.h"
+#include "SinglePoleSwitch.cpp"
 
-class PushButton : public InputDevice{
+class PushButton
+{
 public:
-    PushButton(int);
-    ~PushButton() override;
-
-    bool state = false, lastState = false, pinReading = false, onOrOff = false;
-    unsigned long lastDebounceTime = 0;
-
-    void changeState( bool io ){
-        onOrOff = io;
-    }
-
-    void changeState(){
-        changeState( !onOrOff );
-    }
-
-    void update() override;
+    SinglePoleSwitch sw;
+    bool onOrOff = false;
+    PushButton(int p) : sw(p) {}
+    void update();
 };

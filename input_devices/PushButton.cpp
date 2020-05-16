@@ -1,22 +1,14 @@
 #include "Arduino.h"
 #include "PushButton.h"
 
-PushButton::PushButton(int p) : InputDevice(p) {}
-PushButton::~PushButton() {}
-
 void PushButton::update()
 {
-    pinReading = digitalRead(pin);
-    if( pinReading != lastState ) lastDebounceTime = millis();
-
-    if( millis() - lastDebounceTime > 50 )
+    if( sw.debounce() )
     {
-        if( pinReading != state )
+        if( sw.pinReading != sw.state )
         {
-            state = pinReading;
-            if( state ) changeState();
+            sw.state = sw.pinReading;
+            if( sw.state ) onOrOff = !onOrOff;
         }
     }
-
-    lastState = pinReading;
 }

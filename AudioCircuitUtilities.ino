@@ -13,9 +13,7 @@
 #define opto1pin A0
 #define opto2pin A1
 
-#include <vector>
-
-#include "State.h"
+#include "./State.h"
 
 int inPins[2]  = {btn1pin, btn2pin};
 int outPins[2] = {led1pin, led2pin};
