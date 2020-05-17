@@ -17,10 +17,6 @@ the user selects with different pushbuttons and switches that effect everything 
 
 Potentiometers are used to set the "range" of these possible modulations 
 
-### ModMatrix.h
-
-A class that is composed of an array of 10-bit inputs to be used as modulation for all ExternalParts.
-
 ## external_parts/ExternalPart.h
 
 A virtual class; all real world parts modeled in some sub-class of ExternalPart, like optocouplers and digital potentiometers. The purpose is to take all the modulation and State data, perform some sort of transfer function to take that data and convert it to the desired parameter change in the analog circuit.
@@ -29,13 +25,13 @@ A virtual class; all real world parts modeled in some sub-class of ExternalPart,
 
 A basic interface for the H11Fx series of OptoFETs.
 
-## input_devices/InputDevice.h
+## input_devices
 
-The base class for all components that will have their state read by the MCU, digital or analog. 
+Where all components that will have their state read by the MCU, digital or analog are held. 
 
-### PushButton.h
+### SinglePoleSwitch.h
 
-A stupid simple on/off pushbutton with debounce.
+Basic on/off switch with debounce.
 
 ### Potentiometer.h
 
