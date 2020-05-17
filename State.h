@@ -13,8 +13,9 @@
 
 #include "Arduino.h"
 
-#include "input_devices/PushButton.cpp"
-#include "input_devices/Potentiometer.cpp"
+#include "input_devices/Potentiometer.h"
+
+#include "./ISRHandler.h"
 
 class State
 {
@@ -33,15 +34,17 @@ public:
 
     }
 
+
 private:
 
     // Not implementing to stop usage
     State( State const& copy );
     State& operator= ( State const& copy );
     
+    BypassISR bypassFootswitch{13};
+    
     State(){}
 
-    Potentiometer lpPot{pot1pin};
-    Potentiometer hpPot{pot2pin};
+
 
 };

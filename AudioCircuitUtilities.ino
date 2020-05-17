@@ -4,7 +4,7 @@
 
 // all these #defines spill over to State, which is handy.
 
-#define btn1pin  9
+#define btn1pin  13
 #define btn2pin  10
 #define led1pin  11
 #define led2pin  12
@@ -24,7 +24,6 @@ void setup()
 {
   for( int p : inPins )  { pinMode( p, INPUT );  }
   for( int p : outPins ) { pinMode( p, OUTPUT ); }
-//  attachInterrupt( digitalPinToInterrupt(1), [](){ state.handler.objects[0].callback(); }, CHANGE );
   Serial.begin(9600);
 }
 
