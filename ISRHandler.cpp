@@ -2,16 +2,20 @@
 #include "./ISRHandler.h"
 #include "./input_devices/SinglePoleSwitch.h"
 
-ISRBase::ISRBase( int p ) : pin(p) {}
+ISRBase* ISRBase::instances[10] = {nullptr};
+
+ISRBase::ISRBase( int p ) : pin(p) { } 
 
 BypassISR::BypassISR( int p ) : ISRBase(p), sw(p)
 {
-    ISRHandler::instances[BYPASS_FSW] = this;
+    ISRBase::instances[BYPASS_FSW] = this;
+    Serial.println("Registering ISR");
     attachInterrupt( digitalPinToInterrupt(p), ISR, CHANGE );
 }
 
 void BypassISR::innerISR()
 {
+    Serial.println("Inner ISR");
     if( sw.debounce() )
     {
         if( sw.pinReading != sw.state )
@@ -24,5 +28,6 @@ void BypassISR::innerISR()
 
 void BypassISR::ISR()
 {
-    ISRHandler::instances[BYPASS_FSW]->innerISR();
+    Serial.println("Executing static ISR");
+    ISRBase::instances[BYPASS_FSW]->innerISR();
 }

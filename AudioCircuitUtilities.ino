@@ -13,6 +13,8 @@
 #define opto1pin A0
 #define opto2pin A1
 
+
+
 #include "./State.h"
 
 int inPins[2]  = {btn1pin, btn2pin};

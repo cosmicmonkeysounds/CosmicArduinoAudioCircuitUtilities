@@ -9,7 +9,6 @@
  * 
 */
 
-#include <functional>
 
 #include "Arduino.h"
 
@@ -31,9 +30,8 @@ public:
 
     void mainLoop()
     {
-
+//        Serial.println( bypassFootswitch.onOrOff );
     }
-
 
 private:
 
@@ -41,10 +39,8 @@ private:
     State( State const& copy );
     State& operator= ( State const& copy );
     
-    BypassISR bypassFootswitch{13};
+    const BypassISR bypassFootswitch{13};
     
     State(){}
-
-
-
+    
 };

@@ -2,15 +2,14 @@
 
 #include "./input_devices/SinglePoleSwitch.h"
 
-class ISRHandler;
-
 class ISRBase
 {
 public:
 
-    int pin;
-    ISRBase( int );
+    static ISRBase* instances[10];
     
+    const int pin;
+    ISRBase( int );
     virtual void innerISR() = 0;
 
     enum isrTypes
@@ -38,17 +37,4 @@ public:
     void innerISR() override;
 
     static void ISR();
-};
-
-class ISRHandler
-{
-public:
-    static ISRBase* instances[10];
-    static ISRHandler& getInstance()
-    {
-        static ISRHandler handler;
-        return handler;
-    }
-private:
-    ISRHandler() { }
 };
