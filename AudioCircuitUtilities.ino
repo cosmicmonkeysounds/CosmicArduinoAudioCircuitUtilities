@@ -2,32 +2,24 @@
  *  The root of it all! Pretty barren. 
 */
 
-// all these #defines spill over to State, which is handy.
-
-#define btn1pin  9
-#define btn2pin  10
-#define led1pin  11
-#define led2pin  12
-#define pot1pin  A2
-#define pot2pin  A3
-#define opto1pin A0
-#define opto2pin A1
-
-#include <vector>
+#define BYPASS_BTN  13
+#define SECOND_BTN  12
+#define LED_DATA    3
+#define LED_CLOCK   4
 
 #include "State.h"
 
-int inPins[2]  = {btn1pin, btn2pin};
-int outPins[2] = {led1pin, led2pin};
-
-State& state = State::getInstance();
+int inPins[2]  = { BYPASS_BTN, SECOND_BTN };
 
 void setup()
 {
-  for( int p : inPins )  { pinMode( p, INPUT );  }
-  for( int p : outPins ) { pinMode( p, OUTPUT ); }
-//  attachInterrupt( digitalPinToInterrupt(1), [](){ state.handler.objects[0].callback(); }, CHANGE );
+
+  for( int p : inPins ){ pinMode( p, INPUT ); }
   Serial.begin(9600);
+
 }
 
-void loop(){ state.mainLoop(); }
+void loop()
+{ 
+
+}
