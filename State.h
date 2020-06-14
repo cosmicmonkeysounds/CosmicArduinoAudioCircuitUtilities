@@ -1,18 +1,19 @@
 #pragma once
-#include <unordered_set>
+#include <string>
+#include <unordered_map>
 #include "CircuitParameter.h"
 
 struct State
 {
-    std::unordered_set<CircuitParameter*> parameters;
+    std::unordered_map< const std::string&, const CircuitParameter& > parameters;
 
     State();
-    State( State& );
+    State( const State& );
     State( State&& );
-    State( std::unordered_set<CircuitParameter*> );
+    State( std::unordered_map< const std::string&, const CircuitParameter& > );
 
     ~State();
-
-    State& operator= ( State& );
-    State& operator+ ( State& );
+    
+    State& operator= ( const State& );
+    State& operator+ ( const State& );
 };
