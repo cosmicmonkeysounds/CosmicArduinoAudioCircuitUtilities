@@ -29,3 +29,9 @@ struct PushButton : public UI_Element
     }
 
 };
+
+struct RotaryEncoder : public UI_Element
+{
+    SPST a, b, sw;
+
+};
