@@ -1,6 +1,4 @@
 #pragma once
-#include <string>
-#include <list>
 #include "CircuitElement.h"
 
 struct CircuitParameter
@@ -8,7 +6,6 @@ struct CircuitParameter
     CircuitParameter();
     virtual ~CircuitParameter();
 
-    const std::string& name;
+    char label[15];
     CircuitElement& element;
-
 };

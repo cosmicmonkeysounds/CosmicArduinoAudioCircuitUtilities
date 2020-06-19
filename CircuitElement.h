@@ -1,14 +1,18 @@
 #pragma once
-#include <string>
 
 struct CircuitElement
 {
-    CircuitElement();
-    virtual ~CircuitElement();
+    CircuitElement( const char* s ) 
+    {
+        strcpy( label, s  );
+    }
+    
+    ~CircuitElement() = default;
 
     uint16_t currentValue;
-    const std::string& name;
+    char label[15];
 
     uint16_t transferFunction( uint16_t );
     void update( void(*)() );
+
 };
